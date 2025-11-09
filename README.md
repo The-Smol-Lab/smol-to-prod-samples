@@ -9,16 +9,17 @@ Each folder teaches one clear stage of the journey, from brainstorming to produc
 
 ### 🧭 Learning Path
 
-| Step                  | Focus                                                                                              |
-| --------------------- | -------------------------------------------------------------------------------------------------- |
-| 1️⃣ Requirements      | What problem are you solving? What data or APIs do you need?                                       |
-| 2️⃣ Design            | Sketch the workflow, roles, and data flow. Decide what AI should (and shouldn’t) do.               |
-| 3️⃣ Build             | Write the core app or model logic. Keep it modular and simple.                                     |
-| 4️⃣ Test              | Run locally, catch errors early, and ensure reproducibility.                                       |
-| 5️⃣ Evaluate          | Check accuracy, latency, and cost — adjust until it feels right.                                   |
-| 6️⃣ Frontend          | Add a UI (choose Streamlit for quick demos, Open WebUI for chat-style, or Next.js for production). |
-| 7️⃣ Deploy            | Push to Railway, Render, or AWS when you’re ready to share it.                                     |
-| 8️⃣ Monitor & Improve | Track logs, usage, and iterate over time.                                                          |
+| Step | Focus |
+|------|--------|
+| **1️⃣ Requirements** | Define the problem clearly. Identify who benefits, what success looks like, and what data or APIs you’ll need to solve it. |
+| **2️⃣ Design** | Map the workflow, data flow, and system roles. Decide which parts need AI vs. traditional logic. Choose your agentic framework (LangGraph, OpenAI Agent SDK, Strands Agents, etc.) and initial model (GPT, Claude, Gemini, etc.). Decide whether to build **custom tools** or use **MCP (Model Context Protocol)** for integration. Run quick prompt or data tests to validate feasibility before building. |
+| **3️⃣ Build** | Implement the core logic or model pipeline. Keep components modular and readable for easy iteration. |
+| **4️⃣ Test** | Validate locally. Catch errors early, ensure reproducibility, and confirm all dependencies work as expected. |
+| **5️⃣ Evaluate** | Measure accuracy, latency, and cost trade-offs. Tune prompts, parameters, or data until results feel reliable. |
+| **6️⃣ Frontend** | Add a user interface — use **Streamlit** for quick prototypes, **Open WebUI** for chat workflows, or **Next.js** for full production apps. |
+| **7️⃣ Deploy** | Launch your app to the cloud using **Railway**, **Render**, or **AWS (ECS/Fargate + S3)** once it’s stable. |
+| **8️⃣ Monitor & Improve** | Track logs, performance, and usage. Collect feedback and keep refining both UX and backend logic over time. |
+
 
 ## 🚀 Quickstart
 
