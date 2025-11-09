@@ -1,66 +1,66 @@
 # Smol-to-Production Series
 
-Practical experiments on scaling small AI projects into production-ready systems.
+**Learn how to turn small AI ideas into real, usable apps.**
+This repo is your hands-on guide to building, testing, and deploying AI systems — step by step.
 
-## Core Design Decisions
+## Overview
 
-1. **Folder Structure** – one agent per folder vs shared utilities
-2. **Evaluation** – dataset design, metrics, reproducibility
-3. **Prompt Engineering** – versioning, testing, refinement loops
-4. **Workflow Automation** – human-in-the-loop pipelines
-5. **Database, Chunking & Caching** – how often to chunk, store, and reuse embeddings
-6. **Platform Choice** – Railway vs Render vs AWS (trade-offs)
+Each folder teaches one clear stage of the journey, from brainstorming to production. You can follow along, skip ahead, or remix the steps for your own project.
 
-## Local Development
+### 🧭 Learning Path
 
-1. `.env` configuration (API keys, base URLs, secrets)
-2. Agentic Framework – LangGraph, OpenAI-Agent-SDK, or Strands-Agents
-3. Model Backend – GPT, Gemini, Claude, Qwen, DeepSeek, etc.
-4. Tool Integration – Local vs MCP (why custom tools win)
-5. Prompts – modular, reusable, and versioned
-6. Memory – short-term & long-term strategies
-7. Knowledge Base – local or remote document storage
-8. **Caching** – response cache, retrieval cache, and embedding reuse for cost reduction
+| Step                  | Focus                                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| 1️⃣ Requirements      | What problem are you solving? What data or APIs do you need?                                       |
+| 2️⃣ Design            | Sketch the workflow, roles, and data flow. Decide what AI should (and shouldn’t) do.               |
+| 3️⃣ Build             | Write the core app or model logic. Keep it modular and simple.                                     |
+| 4️⃣ Test              | Run locally, catch errors early, and ensure reproducibility.                                       |
+| 5️⃣ Evaluate          | Check accuracy, latency, and cost — adjust until it feels right.                                   |
+| 6️⃣ Frontend          | Add a UI (choose Streamlit for quick demos, Open WebUI for chat-style, or Next.js for production). |
+| 7️⃣ Deploy            | Push to Railway, Render, or AWS when you’re ready to share it.                                     |
+| 8️⃣ Monitor & Improve | Track logs, usage, and iterate over time.                                                          |
 
-## Testing
+## 🚀 Quickstart
 
-* Run locally as Docker container
-* Load-test for concurrent requests
-* Validate caching efficiency and memory persistence
+```bash
+git clone https://github.com/The-Smol-Lab/smol-to-prod-samples.git
+cd smol-to-prod-samples
+cp .env.example .env
+docker compose up --build
+```
 
-## Deployment
+Visit: [http://localhost:3000](http://localhost:3000)
 
-1. FastAPI backend
-2. Containerization (Docker)
-3. Cloud Hosting – Provisioned VM vs Serverless (Lambda/Fargate/AgentCore)
-4. Distributed caching layer (Redis, DynamoDB TTL, or in-memory)
+## 🧩 Choose Your Stack
 
-## Authentication
+| Goal               | Recommended Tool  |
+| ------------------ | ----------------- |
+| Fast prototype     | Streamlit         |
+| Conversational UI  | Open WebUI        |
+| Production web app | Next.js + FastAPI |
 
-* Inbound & outbound auth strategies (API tokens, OAuth, service accounts)
+## ☁️ Deployment Options
 
-## Monitoring & Observability
+* **One-click preview:** [Railway](https://railway.app/new) • [Render](https://render.com/deploy)
+* **Production scale:** AWS (ECS/Fargate + CloudFront + S3)
 
-* Langfuse for traces
-* AgentCore observability
-* LiteLLM request metrics
-* Cache hit/miss tracking
+## 📁 Folder Layout
 
-## Local vs Cloud Differences
+```
+smol-to-prod-samples/
+├── lessons/   # step-by-step learning modules
+├── examples/  # runnable demos
+├── docs/      # deeper guides
+├── assets/    # diagrams, screenshots
+└── .env.example
+```
 
-* Cost, latency, scaling, caching behavior, and state persistence
+## 💡 Next Steps
 
-## License
+* Try the `examples/minimal-demo` to get started fast.
+* Explore `lessons/` for deeper learning.
+* Deploy your version to the cloud and monitor it.
 
-This project is licensed under the **Apache License 2.0**.
-You may not use this file except in compliance with the License.
-You may obtain a copy of the License at:
-[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+---
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-**Source:** [The-Smol-Lab/smol-to-prod-samples (dev branch)](https://github.com/The-Smol-Lab/smol-to-prod-samples/tree/dev)
+**License:** Apache 2.0
