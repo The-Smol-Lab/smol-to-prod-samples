@@ -5,6 +5,8 @@ Main Content
 Design Decisions:
 1) One agent per folder or .... (alternative)
 2) Evaluation Criteria/Dataset
+3) Prompt Engineering
+4) Workflow Automation & Human-in-the-loop
 
 Local Development:
 1) .env file (e.g. API Key, Base URL, ...)
