@@ -9,16 +9,19 @@ Each folder teaches one clear stage of the journey, from brainstorming to produc
 
 ### 🧭 Learning Path
 
+### 🧭 Learning Path
+
 | Step | Focus |
 |------|--------|
-| **1️⃣ Requirements** | Define the problem clearly. Identify who benefits, what success looks like, and what data or APIs you’ll need to solve it. |
-| **2️⃣ Design** | Map the workflow, data flow, and system roles. Decide which parts need AI vs. traditional logic. Choose your agentic framework (LangGraph, OpenAI Agent SDK, Strands Agents, etc.) and initial model (GPT, Claude, Gemini, etc.). Decide whether to build **custom tools** or use **MCP (Model Context Protocol)** for integration. Run quick prompt or data tests to validate feasibility before building. |
-| **3️⃣ Build** | Implement the core logic or model pipeline. Keep components modular and readable for easy iteration. |
-| **4️⃣ Test** | Validate locally. Catch errors early, ensure reproducibility, and confirm all dependencies work as expected. |
-| **5️⃣ Evaluate** | Measure accuracy, latency, and cost trade-offs. Tune prompts, parameters, or data until results feel reliable. |
-| **6️⃣ Frontend** | Add a user interface — use **Streamlit** for quick prototypes, **Open WebUI** for chat workflows, or **Next.js** for full production apps. |
-| **7️⃣ Deploy** | Launch your app to the cloud using **Railway**, **Render**, or **AWS (ECS/Fargate + S3)** once it’s stable. |
-| **8️⃣ Monitor & Improve** | Track logs, performance, and usage. Collect feedback and keep refining both UX and backend logic over time. |
+| **1️⃣ Requirements** | Start by defining the problem and who it helps. Clarify your goals, success metrics, and the data or APIs your app will rely on. |
+| **2️⃣ Design** | Outline the workflow and system roles. Separate what should be handled by AI versus traditional logic. Select your **agentic framework** (LangGraph, OpenAI Agent SDK, Strands Agents, etc.) and **base model** (GPT, Claude, Gemini, etc.). Decide whether to use **custom tools** or **MCP (Model Context Protocol)** for integration. Run small-scale prompt or data tests to confirm feasibility before coding. |
+| **3️⃣ Build** | Implement the core logic and AI pipeline. Keep your modules clean, reusable, and easy to iterate on. |
+| **4️⃣ Test** | Verify functionality in a local environment. Catch bugs early, confirm reproducibility, and make sure every dependency works as expected. |
+| **5️⃣ Evaluate** | Measure performance across accuracy, latency, and cost. Fine-tune prompts, parameters, or data pipelines until results feel consistent. |
+| **6️⃣ Frontend** | Build a usable interface — **Streamlit** for quick demos, **Open WebUI** for chat-style apps, or **Next.js** for production-grade deployment. |
+| **7️⃣ Deploy** | Launch to the cloud using **Railway**, **Render**, or **AWS (ECS/Fargate + S3)**. Automate builds and environment configs when possible. |
+| **8️⃣ Monitor & Improve** | Track logs, usage, and performance metrics. Gather feedback and iterate on both backend logic and user experience over time. |
+
 
 
 ## 🚀 Quickstart
