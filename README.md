@@ -9,8 +9,6 @@ Each folder teaches one clear stage of the journey, from brainstorming to produc
 
 ### 🧭 Learning Path
 
-### 🧭 Learning Path
-
 | Step | Focus |
 |------|--------|
 | **1️⃣ Requirements** | Start by defining the problem and who it helps. Clarify your goals, success metrics, and the data or APIs your app will rely on. |
