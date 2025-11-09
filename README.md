@@ -4,7 +4,7 @@ Practical experiments on scaling small AI projects into production-ready systems
 
 ---
 
-## 🧠 Core Design Decisions
+## Core Design Decisions
 1. **Folder Structure** – one agent per folder vs shared utilities  
 2. **Evaluation** – dataset design, metrics, reproducibility  
 3. **Prompt Engineering** – versioning, testing, refinement loops  
@@ -14,7 +14,7 @@ Practical experiments on scaling small AI projects into production-ready systems
 
 ---
 
-## 💻 Local Development
+## Local Development
 1. `.env` configuration (API keys, base URLs, secrets)  
 2. Agentic Framework – LangGraph, OpenAI-Agent-SDK, or Strands-Agents  
 3. Model Backend – GPT, Gemini, Claude, Qwen, DeepSeek, etc.  
@@ -26,14 +26,14 @@ Practical experiments on scaling small AI projects into production-ready systems
 
 ---
 
-## 🧪 Testing
+## Testing
 - Run locally as Docker container  
 - Load-test for concurrent requests  
 - Validate caching efficiency and memory persistence
 
 ---
 
-## 🚀 Deployment
+## Deployment
 1. FastAPI backend  
 2. Containerization (Docker)  
 3. Cloud Hosting – Provisioned VM vs Serverless (Lambda/Fargate/AgentCore)  
@@ -41,12 +41,12 @@ Practical experiments on scaling small AI projects into production-ready systems
 
 ---
 
-## 🔐 Authentication
+## Authentication
 - Inbound & outbound auth strategies (API tokens, OAuth, service accounts)
 
 ---
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 - Langfuse for traces  
 - AgentCore observability  
 - LiteLLM request metrics  
@@ -54,7 +54,7 @@ Practical experiments on scaling small AI projects into production-ready systems
 
 ---
 
-## ⚖️ Local vs Cloud Differences
+## Local vs Cloud Differences
 - Cost, latency, scaling, caching behavior, and state persistence
 
 ---
