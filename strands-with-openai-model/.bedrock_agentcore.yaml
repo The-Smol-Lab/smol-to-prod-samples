@@ -1,0 +1,31 @@
+default_agent: strands_openai_getting_started
+agents:
+  strands_openai_getting_started:
+    name: strands_openai_getting_started
+    entrypoint: /Users/ode/Documents/Workspace/work/the-smol-lab/smol-to-prod-samples/strands-with-openai-model/strands_agents_openai.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::733653166178:role/AmazonBedrockAgentCoreSDKRuntime-ap-southeast-1-aeccffb574
+      execution_role_auto_create: false
+      account: '733653166178'
+      region: ap-southeast-1
+      ecr_repository: 733653166178.dkr.ecr.ap-southeast-1.amazonaws.com/bedrock-agentcore-strands_openai_getting_started
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: strands_openai_getting_started-shTg06HBUh
+      agent_arn: arn:aws:bedrock-agentcore:ap-southeast-1:733653166178:runtime/strands_openai_getting_started-shTg06HBUh
+      agent_session_id: 569ce2b3-d24e-42e3-a54e-05b8bf86e5e7
+    codebuild:
+      project_name: bedrock-agentcore-strands_openai_getting_started-builder
+      execution_role: arn:aws:iam::733653166178:role/AmazonBedrockAgentCoreSDKCodeBuild-ap-southeast-1-aeccffb574
+      source_bucket: bedrock-agentcore-codebuild-sources-733653166178-ap-southeast-1
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
