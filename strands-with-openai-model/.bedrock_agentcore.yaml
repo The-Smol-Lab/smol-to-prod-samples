@@ -21,7 +21,7 @@ agents:
     bedrock_agentcore:
       agent_id: strands_openai_getting_started-shTg06HBUh
       agent_arn: arn:aws:bedrock-agentcore:ap-southeast-1:733653166178:runtime/strands_openai_getting_started-shTg06HBUh
-      agent_session_id: 9d003afb-d850-4b87-a0c8-5a8f8fd601a4
+      agent_session_id: b2597979-9d26-4e59-bc59-bbb53fe28fb1
     codebuild:
       project_name: bedrock-agentcore-strands_openai_getting_started-builder
       execution_role: arn:aws:iam::733653166178:role/AmazonBedrockAgentCoreSDKCodeBuild-ap-southeast-1-aeccffb574
