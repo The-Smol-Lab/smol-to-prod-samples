@@ -9,18 +9,20 @@ import boto3
 
 app = BedrockAgentCoreApp()
 
-ssm = boto3.client('ssm', region_name='ap-southeast-1')
+def get_openrouter_api_key(param_name="/llm-provider/openrouter/api-key", region="ap-southeast-1"):
+    """Fetch OpenRouter API key securely from AWS SSM."""
+    ssm = boto3.client("ssm", region_name=region)
+    param = ssm.get_parameter(Name=param_name, WithDecryption=True)
+    return param["Parameter"]["Value"]
 
-parameter = ssm.get_parameter(
-    Name='/llm-provider/openrouter/api-key',
-    WithDecryption=True
-)
 
-OPENROUTER_API_KEY = parameter['Parameter']['Value']
+def setup_environment(api_key: str):
+    """Set environment variables for LiteLLM."""
+    os.environ["OPENROUTER_API_KEY"] = api_key
+    os.environ["OPENROUTER_API_BASE"] = "https://openrouter.ai/api/v1"
 
-# Set environment for LiteLLM
-os.environ["OPENROUTER_API_KEY"] = OPENROUTER_API_KEY
-os.environ["OPENROUTER_API_BASE"] = "https://openrouter.ai/api/v1"
+api_key = get_openrouter_api_key()
+setup_environment(api_key)
 
 # Create a custom tool 
 @tool
