@@ -120,3 +120,4 @@ const response = await fetch(endpoint, {
 * [AWS Bedrock AgentCore Auth0 Guide](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity-idp-auth0.html)
 * [Auth0 OpenID Connect Documentation](https://auth0.com/docs/protocols/protocol-oauth2)
 * [OIDC Discovery Specification](https://openid.net/specs/openid-connect-discovery-1_0.html)
+* [Auth0 - Getting Started](https://manage.auth0.com/dashboard/jp/smol-lab/)
