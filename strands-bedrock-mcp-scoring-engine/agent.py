@@ -8,15 +8,11 @@ from tools import eligibility_scoring_model
 # Initialize Bedrock AgentCore app
 app = BedrockAgentCoreApp()
 
-
 # Create a Bedrock model with the custom session
-
-
 def create_agent() -> Agent:
     """Configure and return a Strands agent instance."""
     model = BedrockModel(
         model_id="global.anthropic.claude-haiku-4-5-20251001-v1:0",
-        params={"max_tokens": 32000, "temperature": 0.3},
     )
     return Agent(
         model=model,
@@ -24,17 +20,20 @@ def create_agent() -> Agent:
         system_prompt="You're a helpful assistant. You can do simple math calculations and run the Car4Cash eligibility scoring model.",
     )
 
-
 # Instantiate agent globally once for performance
 agent = create_agent()
 
 @app.entrypoint
-def strands_agent_open_ai(payload: dict) -> str:
-    """Handle incoming payload and return model output."""
-    prompt = payload.get("prompt", "")
-    response = agent(prompt)
-    return response.message["content"][0]["text"]
-
+async def agent_invocation(payload: dict):
+    """Stream model output back to the caller."""
+    prompt = payload.get(
+        "prompt",
+        "No prompt found in input, please guide customer to create a json payload with prompt key",
+    )
+    stream = agent.stream_async(prompt)
+    async for event in stream:
+        print(event)
+        yield event
 
 if __name__ == "__main__":
     app.run()
