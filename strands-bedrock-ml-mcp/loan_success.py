@@ -1,42 +1,41 @@
 #!/usr/bin/env python3
 
 """
-Loan success scoring model with interpretability,
-categorization, and recommended next steps.
-
-Run:
-    python loan_success_model_demo.py
+New Car Loan Eligibility Scoring Model (Demo)
+- For sales team use over phone
+- Interpretable, rule-based, believable logic
+- Outputs: score, probability, risk bucket, recommendations
 """
 
-def predict_loan_success(income: int,
-                         age: int,
-                         occupation: str,
-                         residence_status: str,
-                         marital_status: str) -> dict:
+def predict_car_loan_eligibility(
+        monthly_income: int,
+        age: int,
+        employment_type: str,
+        job_tenure_years: float,
+        has_existing_loans: bool,
+        residence_status: str,
+        marital_status: str) -> dict:
     """
-    Computes:
-      - score (0 to 100)
-      - probability (percentage)
-      - bucket (Very Low / Low / Medium / High)
-      - recommended action
-      - interpretation ranges
+    Computes overall eligibility score and risk bucket.
+    All ranges & rules are realistic for new car loan screening.
     """
 
     score = 0
     max_score = 100
 
-    # ---- Income Score (max 40 points) ----
-    if income < 15000:
+    # ---- Income Score (max 30 points) ----
+    # New car monthly payment often 7k - 12k → minimum 2.5x safer
+    if monthly_income < 15000:
         score += 5
-    elif income < 30000:
+    elif monthly_income < 25000:
         score += 15
-    elif income < 50000:
-        score += 25
+    elif monthly_income < 40000:
+        score += 22
     else:
-        score += 40
+        score += 30
 
-    # ---- Age Score (max 20 points) ----
-    if age < 21:
+    # ---- Age Score (max 15 points) ----
+    if age < 20:
         score -= 10
     elif age <= 25:
         score += 5
@@ -47,16 +46,32 @@ def predict_loan_success(income: int,
     else:
         score -= 5
 
-    # ---- Occupation Score (max 20 points) ----
-    occ = occupation.lower()
-    if occ in ["government officer", "civil servant", "bank employee"]:
+    # ---- Employment Type (max 20 points) ----
+    emp = employment_type.lower()
+    if emp in ["government officer", "civil servant", "state enterprise"]:
         score += 20
-    elif occ in ["private employee", "engineer", "teacher"]:
+    elif emp in ["private employee", "engineer", "teacher", "office staff"]:
         score += 15
-    elif occ in ["freelancer", "self-employed"]:
+    elif emp in ["freelancer", "self-employed"]:
         score += 8
     else:
+        score += 3
+
+    # ---- Job Tenure (max 10 points) ----
+    if job_tenure_years < 0.5:
+        score += 2
+    elif job_tenure_years < 1:
         score += 5
+    elif job_tenure_years < 3:
+        score += 7
+    else:
+        score += 10
+
+    # ---- Existing Loans (max 10 points) ----
+    if has_existing_loans:
+        score += 3  # some existing loans is normal
+    else:
+        score += 10  # clean profile
 
     # ---- Residence Stability (max 10 points) ----
     res = residence_status.lower()
@@ -65,31 +80,31 @@ def predict_loan_success(income: int,
     elif res == "rent":
         score += 5
     else:
-        score += 2
-
-    # ---- Marital Status (max 10 points) ----
-    ms = marital_status.lower()
-    if ms == "married":
-        score += 10
-    elif ms in ["single", "divorced"]:
-        score += 5
-    else:
         score += 3
 
-    # Bound score
+    # ---- Marital Status (max 5 points) ----
+    ms = marital_status.lower()
+    if ms == "married":
+        score += 5
+    elif ms in ["single", "divorced"]:
+        score += 3
+    else:
+        score += 2
+
+    # Final probability conversion
     score = max(0, min(score, max_score))
     prob = round((score / max_score) * 100, 2)
 
-    # ---- Categorize into risk buckets ----
+    # ---- Risk Bucketing ----
     if prob < 40:
         bucket = "Very Low"
-        action = "Avoid approval unless strong guarantor provided."
+        action = "Reject or request guarantor + high down payment."
     elif prob < 60:
         bucket = "Low"
-        action = "Request more supporting documents or guarantor."
+        action = "Proceed with caution; request more documents."
     elif prob < 80:
         bucket = "Medium"
-        action = "Proceed with normal underwriting."
+        action = "Standard underwriting."
     else:
         bucket = "High"
         action = "Fast-track approval recommended."
@@ -109,26 +124,23 @@ def predict_loan_success(income: int,
 
 
 if __name__ == "__main__":
-    print("=== Loan Success Probability Demo ===")
+    print("=== New Car Loan Eligibility Demo ===")
 
-    demo_data = {
-        "income": 40000,
-        "age": 32,
-        "occupation": "engineer",
+    # Sample demo values (representative of a typical applicant)
+    customer = {
+        "monthly_income": 38000,
+        "age": 30,
+        "employment_type": "private employee",
+        "job_tenure_years": 2.5,
+        "has_existing_loans": True,
         "residence_status": "rent",
         "marital_status": "single",
     }
 
-    result = predict_loan_success(
-        income=demo_data["income"],
-        age=demo_data["age"],
-        occupation=demo_data["occupation"],
-        residence_status=demo_data["residence_status"],
-        marital_status=demo_data["marital_status"],
-    )
+    result = predict_car_loan_eligibility(**customer)
 
     print("\n--- Result ---")
-    print(f"Score: {result['score']} / 100")
+    print(f"Eligibility Score: {result['score']} / 100")
     print(f"Success Probability: {result['probability']}%")
     print(f"Bucket: {result['bucket']}")
     print(f"Recommended Action: {result['action']}")
