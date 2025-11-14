@@ -2,30 +2,18 @@
 
 """
 Simple Refinance Loan Eligibility Predictor
-- Easy logic for field sales to understand
-- Based only on 4 key factors:
-      1. Income
-      2. Months already paid
-      3. Whether customer already owns a car
-      4. Whether customer is previous customer
+Easy logic for field sales to understand.
 
-Output:
-{
-    "score": int,
-    "probability": float,
-    "risk": str,
-    "bucket": str,
-    "features": list,
-    "summary": str
-}
+If customer owns NO car:
+    -> Refinance probability is ALWAYS 0
 """
 
 from typing import Dict, Any, List, Optional
 
 
-# ------------------------------
+# --------------------------------------
 # Helper for bucket + risk
-# ------------------------------
+# --------------------------------------
 def _risk_and_bucket(score: int) -> tuple[str, str]:
     if score >= 80:
         return "Low", "Very Strong"
@@ -36,13 +24,13 @@ def _risk_and_bucket(score: int) -> tuple[str, str]:
     return "High", "Weak"
 
 
-# ------------------------------
-# Simple wrap formatter
-# ------------------------------
-def _wrap(score: int, features: List[Dict[str, Any]]) -> Dict[str, Any]:
+# --------------------------------------
+# Output wrapper
+# --------------------------------------
+def _wrap(score: int, probability: float, features: List[Dict[str, Any]]) -> Dict[str, Any]:
     max_score = 100
     score = max(0, min(score, max_score))
-    probability = round(score / max_score * 100, 1)
+    probability = max(0, probability)
 
     risk, bucket = _risk_and_bucket(score)
 
@@ -64,9 +52,9 @@ def _wrap(score: int, features: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-# ------------------------------
-# REFINANCE MODEL (Simplified)
-# ------------------------------
+# --------------------------------------
+# Refinance model
+# --------------------------------------
 def predict_refinance_success(
     income: int,
     months_paid: Optional[int] = None,
@@ -78,7 +66,20 @@ def predict_refinance_success(
     score = 0
     features: List[Dict[str, Any]] = []
 
+    # -------------------------------
+    # 0. Hard rule: no car → no refinance
+    # -------------------------------
+    if not has_existing_car:
+        # Still compute score for transparency
+        # But probability is forced to 0 downstream
+        features.append({"feature": "no_car", "pts": 0})
+    else:
+        score += 20
+        features.append({"feature": "existing_car", "pts": 20})
+
+    # -------------------------------
     # 1. Income strength
+    # -------------------------------
     if income >= 50000:
         score += 35
         features.append({"feature": "income", "pts": 35})
@@ -89,46 +90,64 @@ def predict_refinance_success(
         score += 15
         features.append({"feature": "income", "pts": 15})
 
+    # -------------------------------
     # 2. Payment history
-    if months_paid is not None:
+    # -------------------------------
+    if has_existing_car:
+        if months_paid is None:
+            months_paid = 0
+
         if months_paid >= 24:
             score += 25
             features.append({"feature": "months_paid", "pts": 25})
         elif months_paid >= 12:
             score += 15
             features.append({"feature": "months_paid", "pts": 15})
-        else:
+        elif months_paid > 0:
             score += 5
             features.append({"feature": "months_paid", "pts": 5})
+        else:
+            features.append({"feature": "months_paid", "pts": 0})
+    else:
+        # Never owned a car
+        features.append({"feature": "months_paid", "pts": 0})
 
-    # 3. Customer already has a car → refinance natural fit
-    if has_existing_car:
-        score += 20
-        features.append({"feature": "existing_car", "pts": 20})
-
-    # 4. Previous customer bonus
+    # -------------------------------
+    # 3. Previous customer bonus
+    # -------------------------------
     if is_previous_customer:
         score += 10
         features.append({"feature": "previous_customer", "pts": 10})
 
-    # 5. Product match (if their old loan was also a car loan)
+    # -------------------------------
+    # 4. Previous product fit
+    # -------------------------------
     if previous_product in {"New Car", "Used Car"}:
         score += 5
         features.append({"feature": "product_match", "pts": 5})
 
-    return _wrap(score, features)
+    # -------------------------------
+    # FINAL PROBABILITY
+    # -------------------------------
+    if not has_existing_car:
+        # Hard override
+        probability = 0.0
+    else:
+        probability = round(score, 1)  # simple linear conversion
+
+    return _wrap(score, probability, features)
 
 
-# ------------------------------
+# --------------------------------------
 # Example usage
-# ------------------------------
+# --------------------------------------
 if __name__ == "__main__":
     result = predict_refinance_success(
-        income=32000,
-        months_paid=18,
-        is_previous_customer=True,
-        has_existing_car=True,
-        previous_product="New Car",
+        income=50000,
+        months_paid=18,           # ignored because no car
+        is_previous_customer=False,
+        has_existing_car=True,     # customer owns NO car
+        previous_product=True,
     )
 
     print("\n=== Refinance Eligibility Example ===")
