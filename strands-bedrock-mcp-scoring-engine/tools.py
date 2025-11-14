@@ -29,6 +29,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, Any, List, Optional
+from strands import tool
 
 
 @dataclass
@@ -270,6 +271,46 @@ def score_car4cash_eligibility(data: Car4CashInput) -> Dict[str, Any]:
         "features": features,
         "summary": summary,
     }
+
+
+@tool
+def eligibility_scoring_model(
+    *,
+    income: int,
+    employment_months: int,
+    car_year: int,
+    car_mileage_km: int,
+    is_car_fully_paid: bool,
+    remaining_installment_months: int,
+    existing_monthly_debt: int,
+    has_past_due: bool,
+    is_previous_customer: bool,
+    prev_good_payer: bool,
+    requested_loan_amount: int,
+    car_estimated_value: int,
+    owner_is_customer: bool,
+    has_full_documents: bool,
+    current_year: Optional[int] = None,
+) -> Dict[str, Any]:
+    """Expose the Car4Cash scoring model as a Strands tool."""
+    payload = Car4CashInput(
+        income=income,
+        employment_months=employment_months,
+        car_year=car_year,
+        car_mileage_km=car_mileage_km,
+        is_car_fully_paid=is_car_fully_paid,
+        remaining_installment_months=remaining_installment_months,
+        existing_monthly_debt=existing_monthly_debt,
+        has_past_due=has_past_due,
+        is_previous_customer=is_previous_customer,
+        prev_good_payer=prev_good_payer,
+        requested_loan_amount=requested_loan_amount,
+        car_estimated_value=car_estimated_value,
+        owner_is_customer=owner_is_customer,
+        has_full_documents=has_full_documents,
+        current_year=current_year,
+    )
+    return score_car4cash_eligibility(payload)
 
 # ----------------------------------------------------
 # Multiple example test cases (High + Medium + Low)
