@@ -37,7 +37,7 @@ def interactive_loop() -> None:
 
     while True:
         try:
-            user_input = input("you> ").strip()
+            user_input = input("you: ").strip()
         except (EOFError, KeyboardInterrupt):
             print("\nExiting...")
             break
